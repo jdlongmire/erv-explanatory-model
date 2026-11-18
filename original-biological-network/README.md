@@ -1,5 +1,8 @@
 # Original Biological Network Hypothesis
 
+> **Primary programme (2026-11-18):** The primary programme for this research is now **ERV Design Model**: https://github.com/jdlongmire/erv-design-model
+> The current whitepapers, causal model, comparative evaluation, and audits R1 to R8 from this folder were curated into that repository with a file by file provenance ledger. This folder is retained as the source record in this superseded (ztype) repository.
+
 Working research folder for the Original Biological Network Hypothesis within the Designed Functional Maturity framework.
 
 ## Research objective
