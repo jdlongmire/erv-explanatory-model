@@ -31,15 +31,16 @@ def main():
     if not shutil.which("datasets"):
         sys.exit("BLOCKED: NCBI datasets CLI not found; install ncbi-datasets-cli.")
     out = {"generated_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(),
-           "method": "datasets summary genome taxon <name> --reference",
+           "method": "datasets summary genome taxon <name> --limit 20; reference candidates selected from metadata",
            "entries": [], "limitations": [
+               "The returned candidate assemblies are not necessarily reference-designated; review selection manually.",
                "Reference selection is a candidate, not verified locus coverage.",
                "No ERV sequence alignment, synteny or absence inference performed.",
                "An empty reference response is unresolved, not biological absence."]}
     failures = 0
     for label, taxon in SPECIES.items():
         command = ["datasets", "summary", "genome", "taxon", taxon,
-                   "--reference", "--limit", "5"]
+                   "--limit", "20"]
         try:
             p = subprocess.run(command, capture_output=True, text=True, timeout=120)
             if p.returncode:
@@ -52,7 +53,8 @@ def main():
                     {"accession": r.get("accession"),
                      "assembly_name": r.get("assembly_info", {}).get("assembly_name"),
                      "assembly_level": r.get("assembly_info", {}).get("assembly_level"),
-                     "refseq_category": r.get("assembly_info", {}).get("refseq_category")}
+                     "refseq_category": r.get("assembly_info", {}).get("refseq_category"),
+                     "assembly_type": r.get("assembly_info", {}).get("assembly_type") }
                     for r in reports],
                 "command": command})
             if not reports:
